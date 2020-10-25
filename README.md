@@ -4,7 +4,9 @@
 <ul>
 
 <li>This program is an assigment in Freecodecamp python projects.</li>
+<li>The Tests were pre-written I just made the program/li>
 <li>To use the app go to main.py and add the time in same format as the functions below:</li>
+
 </ul>
 
 **add_time("3:00 PM", "3:10")

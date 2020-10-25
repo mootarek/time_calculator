@@ -1,7 +1,11 @@
-# Below are some examples of different cases the App will handle. 
-# This application an assigment in Freecodecamp python projects
+<ul>
+<li>Below are some examples of different cases the App will handle. .</li>
+<li>This application an assigment in Freecodecamp python projects.</li>
+</ul>
 
-# To use the app go to main.py and add the time in same format as the functions below:
+
+To use the app go to main.py and add the time in same format as the functions below:
+
 
 **add_time("3:00 PM", "3:10")
 // Returns: 6:10 PM

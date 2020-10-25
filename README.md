@@ -1,9 +1,10 @@
 
-To use the app go to main.py and add the time in same format as the functions below:
+
 
 <ul>
-<li>Below are some examples of different cases the App will handle. .</li>
-<li>This application an assigment in Freecodecamp python projects.</li>
+
+<li>This program is an assigment in Freecodecamp python projects.</li>
+<li>To use the app go to main.py and add the time in same format as the functions below:</li>
 </ul>
 
 **add_time("3:00 PM", "3:10")

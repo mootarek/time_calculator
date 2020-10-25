@@ -1,10 +1,10 @@
 # time_calculator
 
 
-Below are some examples of different cases the App will handle. 
+# Below are some examples of different cases the App will handle. 
 This application an assigment in Freecodecamp python projects
 
-To use the app go to main.py and add the time in same format as functio below
+# To use the app go to main.py and add the time in same format as the functions below:
 
 
 **add_time("3:00 PM", "3:10")

@@ -2,6 +2,10 @@
 
 
 Below are some examples of different cases the App will handle. 
+This application an assigment in Freecodecamp python projects
+
+To use the app go to main.py and add the time in same format as functio below
+
 
 **add_time("3:00 PM", "3:10")
 // Returns: 6:10 PM
@@ -21,6 +25,3 @@ Below are some examples of different cases the App will handle.
 **add_time("6:30 PM", "205:12")
 // Returns: 7:42 AM (9 days later)
 
-This application an assigment in Freecodecamp python projects
-
-To use the app go to main.py and add the time in same format as functio above

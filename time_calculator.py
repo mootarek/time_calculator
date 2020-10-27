@@ -7,84 +7,55 @@ listofdays = [
     "friday",       
     "saturday", 
 ]
-def incrementornot(mins):
-  boolean = False
-  if(mins > 60):
-     boolean = True  
-     mins = mins - 60
-  return boolean, mins
 
-def whileloop(num):
-    while num >= 7:
-      num -= 7
-    return num 
-
-def formatinghrs(hrs):
-    if hrs > 12:
-       hrs = hrs - 12 
-    return hrs       
-
-def formatethehrsofdays(hrs):
-    if hrs == 0:
-       hrs = 12
-    return hrs      
-
-def getnextornot(tothrs, num, form):
-   if tothrs >= 12 and form == 'PM':
-     num = num + 1
-   return num
-
-def getformat(hrs, form):
-  if form == 'AM':
-    if hrs >= 12:
-      form = 'PM'
-  elif form == 'PM':
-    if hrs >= 12:
-      form = "AM"
-  return form       
-
-def minuteformate(mins):
-    if (mins < 10):
-      mins = '0' + str(mins)
-    return mins 
-
-def get_days_bycount_if_no_day_sepcified(tothrs, day, form):    
+def get_days(tothrs, day, form):    
     numdays = 0
     dayreturned = ''
     if day == '': 
         while tothrs >= 24:
           tothrs = tothrs - 24
-          numdays = numdays + 1
-        numdays = getnextornot(tothrs, numdays, form)   
+          numdays = numdays + 1 
+
+        numdays = (numdays + 1 if tothrs >= 12 and form == 'PM'
+        else numdays)
+
         if numdays == 1:
             dayreturned = "next day"
         elif  numdays > 1:
-            dayreturned =  f"{numdays} days later"
-        return tothrs, dayreturned, formatethehrsofdays(tothrs)
+            dayreturned =  f"{numdays} days later"  
+        return tothrs if tothrs != 0 else 12, dayreturned
     else:
         dayreturned = ''
         indexofday = listofdays.index(day)
+
         while tothrs >= 24:
           tothrs = tothrs - 24
           numdays = numdays + 1
-        numdays = getnextornot(tothrs, numdays, form) 
+
+        numdays = (numdays + 1 if tothrs >= 12 and form == 'PM' 
+        else numdays)
+
         if (numdays + indexofday) >= len(listofdays) :
-            number = len(listofdays) + numdays + indexofday
+            # number = len(listofdays) + numdays + indexofday
             temp = numdays
-            numdays = whileloop(number)
-            dayreturned = (listofdays[numdays] + ' next day' if 
-            temp == 1 else listofdays[numdays] +  f" ({temp} days later)")
+            numdays = numdays % 7
+            dayreturned = (listofdays[numdays] + ' next day' 
+            if temp == 1 
+            else listofdays[numdays] +  f" ({temp} days later)")
+
         elif numdays == 0 :
             dayreturned = day
+
         elif numdays == 1 :
-            dayreturned = listofdays[numdays + indexofday] + " next day"
+            dayreturned = (listofdays[numdays + indexofday] 
+            + " next day")
         else:
             dayreturned = (listofdays[numdays + indexofday] + 
-            f" ({numdays} days later)")  
-        return tothrs, dayreturned, formatethehrsofdays(tothrs)    
+            f" ({numdays} days later)") 
+
+        return  tothrs if tothrs != 0 else 12, dayreturned   
 
 def add_time(start, duration, day=''):
-
   starting = start.split(" ")
   num = starting[0]
   form = starting[1]
@@ -96,48 +67,34 @@ def add_time(start, duration, day=''):
   addedmins = addedtime[1]
   tothrs = int(hours) + int(addedhrs)
   totmins = int(mins) + int(addedmins) 
+  returnedstr = ''
 
- 
-  if form == 'PM' or form == "AM":
-    totalhrs = tothrs # I already cal them 
-    returnedstr = ''
+  # incrementing hrs if totalmins exceed 60
+  if(totmins > 60):
+     tothrs += 1
+     totmins = totmins - 60
+
+  tothrs, returnedstr = get_days(int(tothrs), day.lower(), form)  
+
+# getting the right form
+  if form == 'AM':
+    if tothrs >= 12:
+      form = 'PM'
+  elif form == 'PM':
+    if tothrs >= 12:
+      form = "AM"
+
+# getting the right hrs
+  if tothrs > 12:
+       tothrs = tothrs - 12 
+
+# getting the right mins format
+  if totmins < 10:
+      totmins = '0' + str(totmins)    
+
+# final results
+  if returnedstr != '': 
+      print("{0}:{1} {2}, {3}".format(tothrs, totmins, form, returnedstr))
+  else:
+      print("{0}:{1}, {2}".format(tothrs, totmins, form, returnedstr))
     
-    expect, totmins = incrementornot(totmins)
-    if expect:
-      totalhrs += 1
-
-    totalhrs, returnedstr, tothrs = get_days_bycount_if_no_day_sepcified(int(totalhrs), day.lower(), form)  
-      
-    form = getformat(totalhrs ,form) 
-
-    if returnedstr != '': 
-        print('%s:%s %s, %s' % (formatinghrs(totalhrs), minuteformate(totmins), form, returnedstr))
-    else:
-        print('%s:%s %s' % (formatinghrs(totalhrs), minuteformate(totmins), form))
-    
-"""
-add_time("3:00 PM", "3:10")
-# Returns: 6:10 PM
- 
-add_time("11:30 AM", "2:32", "Monday")
-# Returns: 2:02 PM, Monday
- 
-add_time("11:43 AM", "00:20")
-# Returns: 12:03 PM
- 
-add_time("10:10 PM", "3:30")
-# Returns: 1:40 AM (next day)
- 
-add_time("11:43 PM", "24:20", "tueSday")
-# Returns: 12:03 AM, Thursday (2 days later)
- 
-add_time("6:30 PM", "205:12")
-# Returns: 7:42 AM (9 days later)
-
-
-"""  
-
-# THe next day
-# if day is passed and index is 19 it will not be gotten form day list
-# how to handle and store the inital format and then add and then determine how many 24 hours passed and then add days and which day if he spicified
-# handle 13 days later if the day only exceeds and in both cases if he spicifed or no  

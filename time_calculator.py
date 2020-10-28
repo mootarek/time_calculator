@@ -11,11 +11,11 @@ listofdays = [
 def get_days(tothrs, day, form):    
     numdays = 0
     dayreturned = ''
-    if day == '': 
-        while tothrs >= 24:
-          tothrs = tothrs - 24
-          numdays = numdays + 1 
+    while tothrs >= 24:
+      tothrs = tothrs - 24
+      numdays = numdays + 1 
 
+    if day == '': 
         numdays = (numdays + 1 if tothrs >= 12 and form == 'PM'
         else numdays)
 
@@ -28,10 +28,6 @@ def get_days(tothrs, day, form):
         dayreturned = ''
         indexofday = listofdays.index(day)
 
-        while tothrs >= 24:
-          tothrs = tothrs - 24
-          numdays = numdays + 1
-
         numdays = (numdays + 1 if tothrs >= 12 and form == 'PM' 
         else numdays)
 
@@ -42,7 +38,6 @@ def get_days(tothrs, day, form):
             dayreturned = (listofdays[numdays] + ' next day' 
             if temp == 1 
             else listofdays[numdays] +  f" ({temp} days later)")
-
         elif numdays == 0 :
             dayreturned = day
 
@@ -52,7 +47,6 @@ def get_days(tothrs, day, form):
         else:
             dayreturned = (listofdays[numdays + indexofday] + 
             f" ({numdays} days later)") 
-
         return  tothrs if tothrs != 0 else 12, dayreturned   
 
 def add_time(start, duration, day=''):
@@ -71,8 +65,8 @@ def add_time(start, duration, day=''):
 
   # incrementing hrs if totalmins exceed 60
   if(totmins > 60):
-     tothrs += 1
-     totmins = totmins - 60
+    tothrs += totmins//60
+    totmins %= 60
 
   tothrs, returnedstr = get_days(int(tothrs), day.lower(), form)  
 
@@ -90,7 +84,7 @@ def add_time(start, duration, day=''):
 
 # getting the right mins format
   if totmins < 10:
-      totmins = '0' + str(totmins)    
+     totmins = str(totmins).rjust(2, '0')  
 
 # final results
   if returnedstr != '': 
